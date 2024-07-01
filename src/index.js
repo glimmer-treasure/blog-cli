@@ -1,4 +1,4 @@
-import getAddCommand from './addBlog.js'
+import getAddCommand from './commands/add-blog.js'
 
 import { Command } from 'commander';
 const program = new Command();
