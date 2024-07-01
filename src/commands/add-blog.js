@@ -32,7 +32,7 @@ const setTitle = async (frontMatter) => {
         }
     }
     const answers = await prompt([question])
-    frontMatter.set(question.title, answers[question.name])
+    frontMatter.set(question.name, answers[question.name])
 }
 
 /**
@@ -115,7 +115,7 @@ const createBlog = async (blogDir, frontMatter) => {
     } else {
         blogPath = path.resolve(blogDir, `${frontMatter.get('title')}.md`)
     }
-    const content = [...frontMatter.entries()].reduce((entry, prev) => {
+    const content = [...frontMatter.entries()].reduce((prev, entry) => {
         const [key, value] = entry
         if (!Array.isArray(value)) {
             prev += `${key}: ${value}\n`
@@ -127,7 +127,7 @@ const createBlog = async (blogDir, frontMatter) => {
         }
         return prev
     }, '')
-    await fse.outputFile(blogPath, content)
+    await fse.outputFile(blogPath, `---\n${content}---\n`)
 }
 
 const getCommand = () => {
